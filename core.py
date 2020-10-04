@@ -17,7 +17,7 @@ ACCESS_SECRET = os.getenv("ACCESS_SECRET")
 with open("./info.json", "r") as f:
     infos = json.loads(f.read()) # Carrega usuários cadastrados
 
-MAX_TWEETS = 50 # Máxima quantidade de tweets por execução (variável dependendo da frequência de execuções)
+MAX_TWEETS = 5 # Máxima quantidade de tweets por execução (variável dependendo da frequência de execuções)
 OUTLINE_URL = "https://outline.com/"
 
 auth = tweepy.OAuthHandler(API_KEY, API_SECRET)
