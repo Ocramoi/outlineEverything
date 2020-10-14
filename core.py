@@ -40,13 +40,14 @@ def main():
             since_id = None if lastId == -1 else lastId,
             tweet_mode = 'extended'
         ) # Retorna tweets de cada conta
-        updatedIds.append(tweets[0].id) # Atualiza para cada usuário o último tweet respondido
-        for tweet in tweets: # Para cada tweet responde com o outline da notícia e loga possíveis erros
-            try:
-                outline = OUTLINE_URL + tweet._json["entities"]["urls"][0]["expanded_url"]
-                api.update_status(status=f"Outline da notícia (sem paywall e distrações) [mensagem automática @{user}]: {outline}", in_reply_to_status_id=tweet.id)
-            except Exception as e:
-                logger.warning(f"REPLY ERROR! {str(e)}")
+        if(len(tweets) > 0): # Caso tenha retornado tweets
+            updatedIds.append(tweets[0].id) # Atualiza para cada usuário o último tweet respondido
+            for tweet in tweets: # Para cada tweet responde com o outline da notícia e loga possíveis erros
+                try:
+                    outline = OUTLINE_URL + tweet._json["entities"]["urls"][0]["expanded_url"]
+                    api.update_status(status=f"Outline da notícia (sem paywall e distrações) [mensagem automática @{user}]: {outline}", in_reply_to_status_id=tweet.id)
+                except Exception as e:
+                    logger.warning(f"REPLY ERROR! {str(e)}")
 
     infos["last_ids"] = updatedIds
     with open("./info.json", "w+") as f:
