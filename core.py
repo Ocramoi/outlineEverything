@@ -19,7 +19,7 @@ MAX_TWEETS = 15 # Máxima quantidade de tweets por execução (variável depende
 OUTLINE_URL = "https://outline.com/"
 TIMEOUT_MINUTES = 5
 
-def main:
+def main():
     with open("./info.json", "r") as f:
         infos = json.loads(f.read()) # Carrega usuários cadastrados
 
