@@ -19,17 +19,17 @@ MAX_TWEETS = 15 # Máxima quantidade de tweets por execução (variável depende
 OUTLINE_URL = "https://outline.com/"
 TIMEOUT_MINUTES = 5
 
+auth = tweepy.OAuthHandler(API_KEY, API_SECRET)
+auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
+api = tweepy.API(auth)
+if not api.verify_credentials():
+    logger.warning("Error verifying credentials")
+    exit(1)
+logger.info("Credentials verified") # Inicializa API
+
 def main():
     with open("./info.json", "r") as f:
         infos = json.loads(f.read()) # Carrega usuários cadastrados
-
-    auth = tweepy.OAuthHandler(API_KEY, API_SECRET)
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
-    api = tweepy.API(auth)
-    if not api.verify_credentials():
-        logger.warning("Error verifying credentials")
-        exit(1)
-    logger.info("Credentials verified") # Inicializa API
 
     updatedIds = [] # Atualiza ids para evitar repetição (bloqueada pela API, porém ocupa tempo de execução)
     for user, lastId in zip(infos["users"], infos["last_ids"]): # Itera sequencialmente pela lista de usuários para diminuir o fluxo de requests
